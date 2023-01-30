@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid grey;
+  width: 850px;
+  height: 700px;
+  flex-wrap: wrap;
+}
+
+.cell {
+  width: 20%;
+  height: 20%;
+  border: 1px solid green;
+  font-size: 25px;
+}
+
+.userSpaceShip {
+background-color: blue;
+}
+
+.enemyAi {
+  background-color: red;
+}
+
+.bullet {
+  background-color: green;
+}
