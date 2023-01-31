@@ -4,8 +4,7 @@ const width = 13
 const cells = []
 let changeDirection = 1
 let right = true
-let lives = 3
-let score = 0 
+let identity1
 
 for (let i = 0; i < width ** 2; i++) {
   // Creation of the the element with class
@@ -30,8 +29,10 @@ let enemyAi = [
   39, 40, 41, 42, 43, 44, 45, 46
 ]
 
+
 // Adding user to the grid
 cells[userSpaceShip].classList.add('userSpaceShip')
+
 // Adding enemy to the grid
 function createEnemyAI (){
   for (let index = 0; index < enemyAi.length; index++) {
@@ -63,11 +64,15 @@ function userMovement() {
       cells[userSpaceShip].classList.remove('userSpaceShip')
       userSpaceShip += 1
       cells[userSpaceShip].classList.add('userSpaceShip')
-    }
+    } 
   })
 }
 
 userMovement()
+
+
+
+
 
 // ! AI movement
 
@@ -93,9 +98,15 @@ function aiMovement() {
     enemyAi[index] += changeDirection
   }
   
+  for (let index = 0; index < enemyAi.length; index++) {
+    if (userSpaceShip === enemyAi[index]) {
+      console.log('yoohoo')
+      clearInterval(identity1)
+    }
+  }
 
   createEnemyAI()
 
 }
 
-setInterval(aiMovement, 500)
+identity1 = setInterval(aiMovement, 100)
