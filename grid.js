@@ -2,14 +2,18 @@
 const grid = document.querySelector('.grid')
 const width = 13
 const cells = []
+let deadEnemies = []
 let changeDirection = 1
 let right = true
-let identity1
+let start
+let lives = 3
+let score = 0
+
 
 for (let i = 0; i < width ** 2; i++) {
   // Creation of the the element with class
   const cell = document.createElement('div')
-  cell.classList.add('cell')
+  // cell.classList.add('cell')
   // Appending the new element as a child to the grid - Storing the element in an array
   grid.appendChild(cell)
   cells.push(cell)
@@ -29,9 +33,9 @@ let enemyAi = [
   39, 40, 41, 42, 43, 44, 45, 46
 ]
 
-
 // Adding user to the grid
 cells[userSpaceShip].classList.add('userSpaceShip')
+
 
 // Adding enemy to the grid
 function createEnemyAI (){
@@ -70,7 +74,33 @@ function userMovement() {
 
 userMovement()
 
+// ! User Shoot
 
+function shooting(event) {
+  const key = event.key
+  let bulletId
+  let bullet = userSpaceShip
+  function moveShot(){if (key === 'w'){
+    cells[bullet].classList.remove('bullet')
+    bullet -= width
+    cells[bullet].classList.add('bullet') 
+
+    if (cells[bullet].classList.contains('enemyAi')){
+      clearInterval(bulletId)
+      cells[bullet].classList.remove('bullet')
+
+    }
+      
+  
+  }
+  }
+  bulletId = setInterval(moveShot, 100)
+  
+  console.log(bullet)
+
+  }
+
+document.addEventListener('keydown', shooting)
 
 
 
@@ -84,7 +114,8 @@ function aiMovement() {
       enemyAi[index] += width + 1
       changeDirection = -1
       right = false
-    }}
+    }
+  }
 
   if (enemyAi[0] % width === 0 && !right) {
     for (let index = 0; index < enemyAi.length; index++) {
@@ -97,16 +128,23 @@ function aiMovement() {
   for (let index = 0; index < enemyAi.length; index++) {
     enemyAi[index] += changeDirection
   }
-  
-  for (let index = 0; index < enemyAi.length; index++) {
-    if (userSpaceShip === enemyAi[index]) {
-      console.log('yoohoo')
-      clearInterval(identity1)
-    }
-  }
+
+
 
   createEnemyAI()
 
+  endgame()
 }
 
-identity1 = setInterval(aiMovement, 100)
+start = setInterval(aiMovement, 100)
+
+function endgame() {
+  for (let index = 0; index < enemyAi.length; index++) {
+    if (userSpaceShip === enemyAi[index] || lives === 0) {
+      clearInterval(start)
+      removeEnemyAI()
+      document.getElementById('game-over').innerHTML = 'GAME OVER'
+    }
+  }
+}
+
