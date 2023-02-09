@@ -40,8 +40,9 @@ cells[userSpaceShip].classList.add('userSpaceShip')
 // Adding enemy to the grid
 function createEnemyAI (){
   for (let index = 0; index < enemyAi.length; index++) {
+    if(!deadEnemies.includes(index)){
     const enemy = enemyAi[index]
-    cells[enemy].classList.add('enemyAi')
+    cells[enemy].classList.add('enemyAi')}
   }
 }
 
@@ -86,9 +87,19 @@ function shooting(event) {
     cells[bullet].classList.add('bullet') 
 
     if (cells[bullet].classList.contains('enemyAi')){
+      // ? Capture index of when the bullet collids with the enemy 
+      let deadEnemy = bullet
+      // ? push to dead enemy array
+
+    
+      // ? remove from Enemy AI Array
+      let arrayEnemyCheck = enemyAi.indexOf(deadEnemy)
+     deadEnemies.push(arrayEnemyCheck)
+      
+
       clearInterval(bulletId)
       cells[bullet].classList.remove('bullet')
-
+      
     }
       
   
@@ -96,7 +107,7 @@ function shooting(event) {
   }
   bulletId = setInterval(moveShot, 100)
   
-  console.log(bullet)
+
 
   }
 
@@ -136,7 +147,7 @@ function aiMovement() {
   endgame()
 }
 
-start = setInterval(aiMovement, 100)
+start = setInterval(aiMovement, 1000)
 
 function endgame() {
   for (let index = 0; index < enemyAi.length; index++) {
