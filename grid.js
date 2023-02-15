@@ -18,7 +18,7 @@ for (let i = 0; i < width ** 2; i++) {
   grid.appendChild(cell)
   cells.push(cell)
   // ? Temporary - To show numbers to help with maths and placement
-  cell.innerHTML = i
+  // cell.innerHTML = i
   // Styling the size of the created element
   cell.style.width = `${100 / width}%`
   cell.style.height = `${100 / width}%`
@@ -75,6 +75,7 @@ function userMovement() {
 
 userMovement()
 
+
 // ! User Shoot
 
 function shooting(event) {
@@ -87,33 +88,30 @@ function shooting(event) {
     cells[bullet].classList.add('bullet') 
 
     if (cells[bullet].classList.contains('enemyAi')){
-      // ? Capture index of when the bullet collids with the enemy 
-      let deadEnemy = bullet
-      // ? push to dead enemy array
-
-    
-      // ? remove from Enemy AI Array
-      let arrayEnemyCheck = enemyAi.indexOf(deadEnemy)
+      const deadEnemy = bullet
+      const arrayEnemyCheck = enemyAi.indexOf(deadEnemy)
       deadEnemies.push(arrayEnemyCheck)
-      
-      cells[bullet].classList.remove('bullet')
       clearInterval(bulletId)
+      cells[bullet].classList.remove('bullet')
+      cells[bullet].classList.remove('enemyAi')
       score += 100
       document.getElementById('score').innerHTML = score
-      
-      
-    }
-      
+      }
+      console.log(enemyAi.length, deadEnemies.length)
   
   }
   }
   bulletId = setInterval(moveShot, 100)
-  
 
-
+  if (enemyAi.length === deadEnemies.length){
+    document.getElementById('game-over').innerHTML = 'Level Completed'
   }
 
-document.addEventListener('keydown', shooting)
+  }
+  
+
+document.addEventListener('keyup', shooting)
+
 
 
 
@@ -149,7 +147,7 @@ function aiMovement() {
   endgame()
 }
 
-start = setInterval(aiMovement, 500)
+start = setInterval(aiMovement, 1000)
 
 function endgame() {
   for (let index = 0; index < enemyAi.length; index++) {
@@ -159,5 +157,6 @@ function endgame() {
       document.getElementById('game-over').innerHTML = 'GAME OVER'
     }
   }
+ 
 }
 
