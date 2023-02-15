@@ -94,11 +94,13 @@ function shooting(event) {
     
       // ? remove from Enemy AI Array
       let arrayEnemyCheck = enemyAi.indexOf(deadEnemy)
-     deadEnemies.push(arrayEnemyCheck)
+      deadEnemies.push(arrayEnemyCheck)
       
-
-      clearInterval(bulletId)
       cells[bullet].classList.remove('bullet')
+      clearInterval(bulletId)
+      score += 100
+      document.getElementById('score').innerHTML = score
+      
       
     }
       
@@ -147,11 +149,11 @@ function aiMovement() {
   endgame()
 }
 
-start = setInterval(aiMovement, 1000)
+start = setInterval(aiMovement, 500)
 
 function endgame() {
   for (let index = 0; index < enemyAi.length; index++) {
-    if (userSpaceShip === enemyAi[index] || lives === 0) {
+    if (userSpaceShip === enemyAi[index] && cells[userSpaceShip].classList.contains('enemyAi')) {
       clearInterval(start)
       removeEnemyAI()
       document.getElementById('game-over').innerHTML = 'GAME OVER'
